@@ -11,6 +11,7 @@ router.get('/', (req, res) => {
             'post_url', 
             'title', 
             'created_at',
+            // it is saying go ahead and count everything that you get back from this query
             [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
         ],
         include: [
