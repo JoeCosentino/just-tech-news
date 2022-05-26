@@ -83,21 +83,37 @@ router.post('/login', (req, res) => {
     // the below .then():
     // if the email was not found, a message is sent back as a response to the client
     }).then(dbUserData => {
-        if (!dbUserData) {
-            res.status(400).json({ message: 'No user with the email address!' });
+        if(!dbUserData) {
+            res.status(400).json({ message: 'No user with that email address!' });
             return;
         }
-        // res.json({ user: dbUserData });
 
-        // verify user
         const validPassword = dbUserData.checkPassword(req.body.password);
-        if (!validPassword) {
-            res.status(400).json({ message: 'Incorrect Password!' });
+
+        if(!validPassword) {
+            res.status(400).json({ message: 'Incorrect password!' });
             return;
         }
+    
+        req.session.save(() => {
+        // declare session variables
+            req.session.user_id = dbUserData.id;
+            req.session.username = dbUserData.username;
+            req.session.logginIn = true;
 
-        res.json({ user: dbUserData, message: 'You are now loggin in!' });
-    });
+            res.json({ user: dbUserData, message: 'You are now logged in!' });
+        })
+    })
+});
+
+router.post('/logout', (req, res) => {
+    if (req.session.loggedIn) {
+        req.session.destroy(() => {
+            res.status(204).end();
+        });
+    } else {
+        res.status(404).end();
+    }
 });
 
 // PUT /api/users/1
@@ -143,3 +159,5 @@ router.delete('/:id', (req, res) => {
 });
 
 module.exports = router;
+
+// LEFT OFF 14.3.1
