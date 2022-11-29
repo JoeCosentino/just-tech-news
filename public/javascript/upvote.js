@@ -15,11 +15,9 @@ async function upvoteClickHandler(event) {
         }
     });
 
-    if (response.ok) {
+    if (response.ok) 
         document.location.reload();
-    } else {
-        alert(response.statusText);
-    }
+    else alert(response.statusText);
 }
 
 document.querySelector('.upvote-btn').addEventListener('click', upvoteClickHandler);

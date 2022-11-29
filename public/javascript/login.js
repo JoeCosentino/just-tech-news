@@ -17,11 +17,10 @@ async function signupFormHandler(event) {
         });
         
         // check the response status
-        if(response.ok) {
+        if(response.ok)
             console.log('success');
-        } else {
-            alert(response.statusText);
-        }
+        else alert(response.statusText);
+        
         console.log(response);
     }
 }
@@ -34,7 +33,7 @@ async function loginFormHandler(event) {
 
     if(email && password) {
         const response = await fetch('/api/users/login', {
-            method: 'post',
+            method: 'POST',
             body: JSON.stringify({
                 email,
                 password
@@ -42,11 +41,9 @@ async function loginFormHandler(event) {
             headers: { 'Content-Type': 'application/json' }
         });
 
-        if(response.ok) {
-            document.location.replace('/');
-        } else {
-            alert(response.statusText);
-        }
+        if(response.ok) 
+            document.location.replace('/dashboard');
+        else alert(response.statusText);
     }
 }
 

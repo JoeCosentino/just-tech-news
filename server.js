@@ -33,6 +33,10 @@ app.set('view engine', 'handlebars');
 // turn on routes
 app.use(routes);
 
+app.get('/upload', (req, res) => {
+    res.render('upload');
+});
+
 // turn on connection to db and server
 // the 'sync' part means that this is Sequelize taking the models
 // and connecting them to associated database tables.
